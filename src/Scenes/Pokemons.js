@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, ScrollView} from 'react-native'
-import {CardPokemon} from '../Components/Pokemon/CardPokemon'
+import CardPokemon from '../Components/Pokemon/CardPokemon'
 
 export default class Pokemons extends Component {
   constructor(props){
@@ -44,9 +44,9 @@ export default class Pokemons extends Component {
   }
   //async function getUserAsync(name){let response = await fetch(`https://api.github.com/users/${name}`);let data = await response.json()return data;}getUserAsync('yourUsernameHere').then(data => console.log(data));
   
-  goToPokemon = (item, index) => {
-    console.warn('item', item)
-    this.props.navigation.navigate('DetailPokemon', item)
+  goToPokemon = (item, index, imagePokemon, type  ) => {
+    //console.warn('item', item)
+    this.props.navigation.navigate('DetailPokemon', {item: item, index: index + 1, img: imagePokemon, type: type})
   }
     render(){
         const { pokemon, types } = this.state;    
@@ -62,7 +62,10 @@ export default class Pokemons extends Component {
                         >
                             { pokemon && pokemon.map((item, index)=> 
                             <CardPokemon
-                                    onPress={() => this.goToPokemon(item, index)}
+                                    onPress={() => this.goToPokemon(item, index,  
+                                      `https://pokeres.bastionbot.org/images/pokemon/${index+1}.png`,
+                                      types[index]
+                                      )}
                                     backgroundColor={'#267FC2'} 
                                     imagePokemon={`https://pokeres.bastionbot.org/images/pokemon/${index+1}.png`}
                                     productName={item.name}
