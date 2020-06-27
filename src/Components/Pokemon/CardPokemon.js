@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, StyleSheet, Text, Image, Dimensions, Platform, TouchableOpacity } from 'react-native'
 
 const height = Dimensions.get('window').height;
@@ -63,50 +63,54 @@ const styles = StyleSheet.create({
         marginRight: 10
     }
 })
-const CardPokemon = (props) => {
-    const { imagePokemon, productName, order, image, type, backgroundColor, onPress, direction, keyItem } = props
-    const goToProduct = (item, index) => {
-        console.warn(' this.props.goToProduct Function', onPress)
-        onPress && onPress(item, index)
+export default class CardPokemon extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+
+        }
     }
-    return(
-            <View style={[styles.container, {backgroundColor: backgroundColor}]}>
-                <View style={{ marginVertical: 10, flexDirection:'row' }}>
-                    <View style={styles.imageContainer}>
-                    <Image
-                        source={{uri: imagePokemon}}
-                        style={styles.imagePorkemon}
-                    />
-                    </View>
-                    <View style={styles.containerDetails}>
-                        <Text style={styles.pokemonName}>
-                        {productName}
-                        </Text>
-                        <Text style={styles.pokemonDetail}>
-                        {order}
-                        </Text>
-                        <Text style={{alignItems: "flex-start", color: '#ffffff', fontSize: 12}}>
-                        {image}
-                        </Text>
-                        {type && type.map((item, index) =>
-                        <Text style={styles.pokemonDetail} >
-                        {item.type.name}
-                        </Text>
-                        ) }
-                    </View>
-                    <View style={styles.goDetails}>
-                    <TouchableOpacity onPress={goToProduct}>
+    goToPokemon = (item, index) => {
+        this.props.onPress && this.props.onPress(item, index)
+    }
+    render(){
+    const { imagePokemon, productName, order, image, type, backgroundColor, onPress, direction, keyItem } = this.props;
+    //console.warn('cart', this.props);
+        return(
+                <View style={[styles.container, {backgroundColor: backgroundColor}]}>
+                    <View style={{ marginVertical: 10, flexDirection:'row' }}>
+                        <View style={styles.imageContainer}>
                         <Image
-                            source={direction}
-                            style={styles.imageDirection}
+                            source={{uri: imagePokemon}}
+                            style={styles.imagePorkemon}
                         />
-                    </TouchableOpacity>
+                        </View>
+                        <View style={styles.containerDetails}>
+                            <Text style={styles.pokemonName}>
+                            {productName}
+                            </Text>
+                            <Text style={styles.pokemonDetail}>
+                            {order}
+                            </Text>
+                            <Text style={{alignItems: "flex-start", color: '#ffffff', fontSize: 12}}>
+                            {image}
+                            </Text>
+                            {type && type.map((item, index) =>
+                            <Text style={styles.pokemonDetail} >
+                            {item.type.name}
+                            </Text>
+                            ) }
+                        </View>
+                        <View style={styles.goDetails}>
+                        <TouchableOpacity onPress={this.goToPokemon}>
+                            <Image
+                                source={direction}
+                                style={styles.imageDirection}
+                            />
+                        </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
-    )
-}
-
-export {
-    CardPokemon
+        )
+    }
 }
